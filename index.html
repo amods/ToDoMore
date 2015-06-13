@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <!--<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">-->
+    <title>TodoMore - Task manager</title>
+    <link rel="stylesheet" href="bootstrap.min.css" />
+</head>
+<body ng-app="todoApp" ng-controller="userCtrl">
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid" style="padding-top:7px;">
+              <button class="btn btn-primary" ng-click="addEditTask('new')">
+            <span class="glyphicon glyphicon-calendar"></span>&nbsp;Create New Task
+        </button>
+            <form class="form-inline pull-right" style="display:inline-block;" >
+                <div class="form-group">
+                    <label class="label label-info" for="taskName">Task Name:</label>                    
+                    <input type="text" class="form-control" ng-model="name" id="taskName" placeholder="e.g. Pay electricity bill" />                 
+                </div>
+                <div class="form-group">
+                    <label class="label label-info" for="taskDate">Due date:</label>
+                    <input type="date" class="form-control" id="taskDate" ng-model="dueTime" />
+                </div>
+                <button class="btn btn-success" ng-disabled="incomplete" ng-click="saveChanges()">
+                    <span class="glyphicon glyphicon-floppy-disk"></span>&nbsp;Save Changes
+                </button>
+            </form>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <br /><br /><br />
+        <div class="alert alert-success" ng-show="showMsg" role="alert">Saved successfully !</div>
+        <div class="well well-lg ">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th class="col-md-2">Edit</th>
+                        <th class="col-md-6">Task</th>
+                        <th class="col-md-4">Due date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="task in taskList track by $index">
+                        <td>
+                            <button class="btn" ng-click="addEditTask(task.id)">
+                                <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Edit
+                            </button>
+                        </td>
+                        <td>{{ task.name }}</td>
+                        <td>{{ task.dueTime }}</td>
+                        <td><span class="label label-success" ng-show="isOverdue(task.dueTime)">Overdue</span></td>
+                        <td> <button type="button" class="btn btn-link" ng-click="deleteTask(task.id)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+       
+    </div>
+    <script type="text/javascript" src="angular.min.js"></script>
+    <script type="text/javascript" src="index.js"></script>
+</body>
+</html>
